@@ -2,7 +2,7 @@
 
 //Please provide the following user input:
 costThreshold = 20;
-email = "dimitrios.panourgias@virail.com";
+email = "your.email@here.com";
 
 function main() {
   Logger.log("MCC ad account cost alert");
