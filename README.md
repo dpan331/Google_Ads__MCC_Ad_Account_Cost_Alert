@@ -2,4 +2,6 @@
 
 This short JavaScript Google Ads script checks on the Cost change % between Yesterday and the Day Before per ad account in your MCC and if it finds a value bigger or less than a certain threshold input number, sends you an email alert.
 
+In order for it to function, you have to set it up on MCC level.
+
 🚸 This script is not maintained, so, in time, certain operations or even the entire script may not be functional.
