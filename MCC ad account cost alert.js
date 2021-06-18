@@ -88,9 +88,8 @@ function adAccountCostChecker(costThreshold, email) {
   }
   
   var now = new Date();
-  var MILLIS_PER_DAY = 1000 * 60 * 60 * 24;
-  var yestRAW = new Date(now.getTime() - MILLIS_PER_DAY);
-  var dayBefRAW = new Date(now.getTime() - MILLIS_PER_DAY * 2);
+  var yestRAW = new Date(now.getTime() - 1000 * 60 * 60 * 12);
+  var dayBefRAW = new Date(now.getTime() - 1000 * 60 * 60 * 47);
   var yest = Utilities.formatDate(yestRAW, 'Etc/GMT', 'dd-MM-yyyy');
   var dayBef = Utilities.formatDate(dayBefRAW, 'Etc/GMT', 'dd-MM-yyyy');
   var cells = [];
