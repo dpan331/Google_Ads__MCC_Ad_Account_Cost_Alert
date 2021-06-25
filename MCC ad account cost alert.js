@@ -2,7 +2,7 @@
 
 //Please provide the following user input:
 costThreshold = 20;
-email = "your.email@here.com";
+email = "dimitrios.panourgias@virail.com";
 
 function main() {
   Logger.log("MCC ad account cost alert");
@@ -27,20 +27,6 @@ function adAccountCostChecker(costThreshold, email) {
     var account = accountIterator.next();
     AdsManagerApp.select(account);
     
-    var reportYesterday = AdsApp.report(
-        'SELECT AccountDescriptiveName, Cost ' +
-        'FROM   ACCOUNT_PERFORMANCE_REPORT ' +
-        'WHERE  Impressions > 0 ' +
-        'DURING YESTERDAY');
-    var rowsYesterday = reportYesterday.rows();
-    while (rowsYesterday.hasNext()) {
-      var rowYesterday = rowsYesterday.next();
-      var accountName = rowYesterday["AccountDescriptiveName"];
-      accountList.push(accountName);
-      var accountCost = rowYesterday["Cost"];
-      yesterdaySpend.push(accountCost);
-    }
-    
     var reportDayBeforeYesterday = AdsApp.report(
         'SELECT AccountDescriptiveName, Cost ' +
         'FROM   ACCOUNT_PERFORMANCE_REPORT ' +
@@ -50,11 +36,32 @@ function adAccountCostChecker(costThreshold, email) {
     while (rowsDayBeforeYesterday.hasNext()) {
       var rowDayBeforeYesterday = rowsDayBeforeYesterday.next();
       var accountName = rowDayBeforeYesterday["AccountDescriptiveName"];
+      accountList.push(accountName);
       var accountCost = rowDayBeforeYesterday["Cost"];
       dayBeforeYesterdaySpend.push(accountCost);
     }
+    
+    var reportYesterday = AdsApp.report(
+        'SELECT AccountDescriptiveName, Cost ' +
+        'FROM   ACCOUNT_PERFORMANCE_REPORT ' +
+        'WHERE  Impressions > 0 ' +
+        'DURING YESTERDAY');
+    var rowsYesterday = reportYesterday.rows();
+    while (rowsYesterday.hasNext()) {
+      var rowYesterday = rowsYesterday.next();
+      var accountName = rowYesterday["AccountDescriptiveName"];
+      var n = accountList.includes(accountName);
+      var accountCost = rowYesterday["Cost"];
+      if (n === true) {
+        yesterdaySpend.push(accountCost);
+      }
+    }
   }
-  
+  Logger.log(accountList);
+  Logger.log(yesterdaySpend);
+  Logger.log(dayBeforeYesterdaySpend);
+
+
   var diff = [];
   var diffPerc = [];
   var i = 0;
