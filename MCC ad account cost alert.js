@@ -11,8 +11,10 @@ function main() {
 }
 
 function adAccountCostChecker(costThreshold, email) {
-  var accountSelector = AdsManagerApp.accounts().withCondition("Impressions > 0")
-     .forDateRange("LAST_7_DAYS")
+  var accountSelector = AdsManagerApp.accounts()
+       .withCondition("LabelNames CONTAINS 'Script_Generated'")
+     //.withCondition("Impressions > 0")
+     //.forDateRange("LAST_7_DAYS")
   var accountIterator = accountSelector.get();
   
   var accountList = [];
@@ -30,7 +32,7 @@ function adAccountCostChecker(costThreshold, email) {
     var reportDayBeforeYesterday = AdsApp.report(
         'SELECT AccountDescriptiveName, Cost ' +
         'FROM   ACCOUNT_PERFORMANCE_REPORT ' +
-        'WHERE  Impressions > 0 ' +
+        //'WHERE  Impressions > 0 ' +
         'DURING ' + dayBefore + ', ' + dayBefore);
     var rowsDayBeforeYesterday = reportDayBeforeYesterday.rows();
     while (rowsDayBeforeYesterday.hasNext()) {
@@ -44,7 +46,7 @@ function adAccountCostChecker(costThreshold, email) {
     var reportYesterday = AdsApp.report(
         'SELECT AccountDescriptiveName, Cost ' +
         'FROM   ACCOUNT_PERFORMANCE_REPORT ' +
-        'WHERE  Impressions > 0 ' +
+        //'WHERE  Impressions > 0 ' +
         'DURING YESTERDAY');
     var rowsYesterday = reportYesterday.rows();
     while (rowsYesterday.hasNext()) {
